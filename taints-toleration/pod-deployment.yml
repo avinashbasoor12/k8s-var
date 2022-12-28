@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd
+spec:
+  replicas: 7
+  selector:
+    matchLabels:
+      tag: new-httpd
+  template:
+    metadata:
+      labels:
+        tag: new-httpd
+    spec:
+      containers:
+      - name: httpd-name
+        image: httpd
+      tolerations:
+      - key: "taintkey1"
+        value: "taintvalue1"
+        operator: "Equal"
+        effect: "NoSchedule"
+
