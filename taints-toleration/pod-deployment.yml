@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: httpd
+  namespace: develop
 spec:
-  replicas: 7
+  replicas: 2
   selector:
     matchLabels:
       tag: new-httpd
@@ -14,10 +15,5 @@ spec:
     spec:
       containers:
       - name: httpd-name
-        image: httpd
-      tolerations:
-      - key: "taintkey1"
-        value: "taintvalue1"
-        operator: "Equal"
-        effect: "NoSchedule"
+        image: nginx
 

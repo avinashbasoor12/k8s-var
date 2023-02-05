@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bus
+  template:
+    metadata:
+      labels:
+        app: bus
+    spec:
+      volumes: 
+        - name: newvolume
+          persistentVolumeClaim:
+            claimName: my-disk 
+      containers:
+        - name: pv-recycler
+          image: nginx
+          volumeMounts:
+          - name: newvolume
+            mountPath: "/tmp/data/"
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 50m
+              memory: 512Mi
+            limits:
+              cpu: 100m
+              memory: 2048Mi
+
